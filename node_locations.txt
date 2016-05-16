@@ -1,0 +1,48 @@
+CHTC Node Locations. Up-to-date as of May 13, 2016.
+
+This is not a comprehensive list of every server the CHTC Manages. It is a
+complete list of every execute node the CHTC Manages, but not every node listed
+is an execute node.
+
+Room B240
+
+--------------------------------------------------------------------------------
+Rack |  A2  |    A4   |    C1   |  C2  |     C4     |  E2  |    E5   |    E6   |
+-----|------|---------|---------|------|------------|------|---------|----------
+Node | c071 | mussel  | e036    | c031 | atlas13    | e061 | atlas80 | atlas64 |
+     | c061 | atlas18 | e027    | c032 | atlas14    | e060 | atlas81 | atlas65 |
+     | c073 | atlas19 | e039    | c033 | atlas28    | e059 | atlas82 | atlas66 |
+     | c074 | atlas20 | atlas17 | c011 | atlas15    | e058 | atlas83 | atlas67 |
+     | c041 | e047    | atlas11 | c035 | starfish   | e002 | atlas84 | atlas68 |
+     | c076 | e035    | atlas12 | c037 | e013       | e025 | atlas85 | atlas69 |
+     | c077 | e034    | atlas16 | c038 | e012       | e030 | atlas86 | atlas70 |
+     | c078 | [???]   |         | c039 | e011       | e057 | atlas87 | atlas71 |
+     | c064 | e006    |         | c040 | spalding11 | e022 | atlas88 | atlas72 |
+     | c080 | cobbler |         | c021 | spalding10 | e040 | atlas90 | atlas73 |
+     | c062 | e010    |         | c022 | spalding09 | e023 | atlas90 | atlas74 |
+     | c053 | e045    |         | c023 | spalding08 | e018 | atlas91 | atlas75 |
+     | c054 | e044    |         | c024 | spalding07 | e016 | atlas92 | atlas76 |
+     | c055 | [???]   |         | c025 | spalding06 | e026 | atlas93 | atlas77 |
+     | c046 | e003    |         | c026 | spalding05 | e028 | atlas95 | atlas78 |
+     | c057 |         |         | c027 | c081       | e041 | atlas96 | atlas79 |
+     | c058 |         |         | c028 | c082       | e038 | atlas97 | atlas80 |
+     | c059 |         |         | c029 | c084       | e042 | atlas98 | atlas42 |
+     | c060 |         |         | c030 | c085       | e046 | atlas99 | atlas62 |
+     | e049 |         |         | c012 | c086       | e056 |         |         |
+     | e050 |         |         | c013 | c088       | e052 |         |         |
+     | e051 |         |         | c049 | c089       | e043 |         |         |
+     | e054 |         |         | c015 | c090       | db1  |         |         |
+     | e055 |         |         | c016 |            | db2  |         |         |
+     | e062 |         |         | c017 |            | db3  |         |         |
+     | e063 |         |         | c069 |            | db4  |         |         |
+     | e064 |         |         | c020 |            | db5  |         |         |
+     | e065 |         |         | c001 |            | db6  |         |         |
+     | e031 |         |         | c002 |            | db7  |         |         |
+     |      |         |         | c004 |            |      |         |         |
+     |      |         |         | c070 |            |      |         |         |
+     |      |         |         | c065 |            |      |         |         |
+     |      |         |         | c007 |            |      |         |         |
+     |      |         |         | c008 |            |      |         |         |
+     |      |         |         | c009 |            |      |         |         |
+     |      |         |         | c010 |            |      |         |         |
+--------------------------------------------------------------------------------
