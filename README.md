@@ -33,7 +33,7 @@ a server that breaks.
 Contributing is easy. If you want to make an edit to the guide the easiest way
 is to fork this repository, make the relevant changes to the TXT version of the
 guide or another file, and submit a pull request. Check out [github's guide to
-contributing][https://guides.github.com/activities/contributing-to-open-source/].
+contributing](https://guides.github.com/activities/contributing-to-open-source/).
 
 You can also open any issues that you see in the github issue tracker, and feel
 free to submit pull requests to fix issues that are listed. Thanks!
@@ -41,3 +41,5 @@ free to submit pull requests to fix issues that are listed. Thanks!
 If you want to edit the PDF version, you can make a copy of the Google Doc, make
 your changes to it, save it locally as a PDF, and then submit a pull request
 with the new PDF. I'll take a look at merging those changes into future releases.
+
+[Google Doc is here](https://docs.google.com/document/d/1XWWugLd2ubjC2SWD6XwMQ3_cEg3PHSabXV6s7yz56gM/edit?usp=sharing).
