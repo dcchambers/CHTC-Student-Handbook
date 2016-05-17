@@ -27,6 +27,7 @@ a server that breaks.
   * Checking for Errors
   * Advanced Topics
 * Add the txt version from the gdoc.
+
 ---
 ### Contributing
 Contributing is easy. If you want to make an edit to the guide the easiest way
