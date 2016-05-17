@@ -22,8 +22,8 @@ a server that breaks.
 
 ### TODO
 * Finish the CHTC Student Handbook
-⋅⋅* Building a New Node
-⋅⋅* Decommissioning a Node
-⋅⋅* Creating Tickets
-⋅⋅* Checking for Errors
-⋅⋅* Advanced Topics
+  * Building a New Node
+  * Decommissioning a Node
+  * Creating Tickets
+  * Checking for Errors
+  * Advanced Topics
