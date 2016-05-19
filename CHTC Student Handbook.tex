@@ -195,7 +195,44 @@
 \clearpage
 
 \section{Building a New Node}
-    TODO
+    TODO - Flesh out this section. \\
+
+    Building a new node is very similiar to rebuilding a current machine, with the
+    added caveat of configuring the node in Cobbler and DHCP.
+    \begin{enumerate}
+        \item First, we need to create a new entry for the node in Cobbler. You
+        should be provided a hostname and IP address to use for the new machine.
+        You can create a new Cobbler entry via the Web interface or CLI.
+        \begin{itemize}
+            \item Via Web Interface
+            \begin{itemize}
+                \item Go to cobbler web.
+                \item Create a new system. The Easiest way to do this is to copy
+                an existing entry and change the relevent information.
+                \item Open up the new machine entry you just created, change the
+                hostname, the IP address, and MAC address, and make sure that
+                the profile and image are set to the correct one.
+                \item Enable netboot, save it, and sync cobbler once it's configured
+                correctly.
+            \end{itemize}
+            \item Via CLI
+            \begin{itemize}
+                \item CLI instructions... TODO
+            \end{itemize}
+        \end{itemize}
+        \item Next, we need to create a DHCP entry for this machine.
+        \begin{itemize}
+            \item DHCP is managed by different machines depending on the node location.
+            \item B240 - cobbler-b240
+            \item 2360/CSL \& WID Data Center - wid-service-1
+            \item 3370 - host-6
+            \item SSH into the correct server and become root. Then open up dhcpd.conf in VIM.
+            \item Copy an exec node entry and edit it to create a new entry with the
+            correct IP and MAC address of the new machine. Save the file.
+            \item run {\fontfamily{cmtt}\selectfont \$ service dhcpd restart } - if
+            an error comes up, you screwed up the .conf file.
+        \end{itemize}
+    \end{enumerate}
 \clearpage
 
 \section{Decommissioning a Node}
