@@ -22,7 +22,7 @@
 % TITLE PAGE
 \title{CHTC Student Handbook \\
     \large Edition 0.1}
-\author{Dakota Chambers}
+\author{Center for High Throughput Computing}
 \date{\today}
 \maketitle
 
@@ -101,6 +101,9 @@
             \item The appendix includes a complete list of node locations, useful
             for location a machine for physical changes (hard reboot, HDD swap, etc).
         \end{itemize}
+
+    \subsection{Useful Resources}
+        TODO - A list of useful tools and resources.
 
 \clearpage
 
@@ -189,7 +192,7 @@
                 \item Confirm condor is running: {\fontfamily{cmtt}\selectfont \$
                 condor\_status \$HOSTNAME }
                 \item You should also see Condor running with {\fontfamily{cmtt}\selectfont
-                \$ ps aux }
+                \$ ps aux | grep condor }
             \end{enumerate}
     \end{enumerate}
 \clearpage
@@ -223,9 +226,9 @@
         \item Next, we need to create a DHCP entry for this machine.
         \begin{itemize}
             \item DHCP is managed by different machines depending on the node location.
-            \item B240 - cobbler-b240
-            \item 2360/CSL \& WID Data Center - wid-service-1
-            \item 3370 - host-6
+            \item B240: cobbler-b240
+            \item 2360/CSL \& WID Data Center: wid-service-1
+            \item 3370: host-6
             \item SSH into the correct server and become root. Then open up dhcpd.conf in VIM.
             \item Copy an exec node entry and edit it to create a new entry with the
             correct IP and MAC address of the new machine. Save the file.
@@ -250,6 +253,14 @@
         \subsubsection{Icinga CLI}
     \subsection{Error Logs}
     \subsection{Hardware Errors}
+\clearpage
+
+\section{Advanced Topics}
+    \subsection{Networking}
+        \subsubsection{Networking Basics}
+        \subsubsection{CHTC Network Structure}
+        \subsubsection{Troubleshooting Networking Issues}
+
 \clearpage
 
 
@@ -512,6 +523,10 @@
         \end{center}
 
 
+\clearpage
+
+\section{Glossary}
+TODO
 \clearpage
 
 \end{document}
