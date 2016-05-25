@@ -17,7 +17,7 @@ Node | c071 | mussel  | e036    | c031 | atlas13    | e061 | atlas80 | atlas64 |
      | c077 | e034    | atlas16 | c038 | e012       | e030 | atlas86 | atlas70 | stress4    | e005   | atlas33 | atlas50 |
      | c078 | [???]   |         | c039 | e011       | e057 | atlas87 | atlas71 | host-5     | e089   | atlas34 | atlas51 |
      | c064 | e006    |         | c040 | spalding11 | e022 | atlas88 | atlas72 |            | e090   | atlas35 | atlas52 |
-     | c080 | cobbler |         | c021 | spalding10 | e040 | atlas90 | atlas73 |            | e088   | atlas36 | atlas53 |
+     | c080 | cobbler |         | c021 | spalding10 | e040 | atlas89 | atlas73 |            | e088   | atlas36 | atlas53 |
      | c062 | e010    |         | c022 | spalding09 | e023 | atlas90 | atlas74 |            | e087   | atlas37 | atlas54 |
      | c053 | e045    |         | c023 | spalding08 | e018 | atlas91 | atlas75 |            | e086   | atlas38 | atlas55 |
      | c054 | e044    |         | c024 | spalding07 | e016 | atlas92 | atlas76 |            | e085   | atlas39 | atlas56 |
