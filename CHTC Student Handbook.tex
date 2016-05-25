@@ -173,11 +173,12 @@
             log. If the log is paused on “{\fontfamily{cmtt}\selectfont Starting:
             anamon…     [OK] }” for a while, that mean’s it’s running puppet. Good
             job! Once it finishes booting now, you should be able to log in with your username.
+        \item IF puppet did NOT RUN
             \item If the machine does not automatically run puppet, connect a console
             to the machine and log in as a root user (ask Admin for root login)
             \item After clearing the puppet files from wid-service-1 in the previous
-            steps, run {\fontfamily{cmtt}\selectfont \$ sudo rm -rvf /var/lib/pup/ssl }
-            on the target node. DO NOT RUN THIS ON wid-service-1.
+            steps, ON THE TARGET NODE only: run {\fontfamily{cmtt}\selectfont \$ sudo rm -rvf /var/lib/pup/ssl } .
+            DO NOT RUN THIS ON wid-service-1.
             \item Then run {\fontfamily{cmtt}\selectfont \$ sudo puppetd -tv
             --configtimeout=1000 }
             \item Note: Puppet will not run if networking is broken (try to restart
@@ -192,7 +193,7 @@
                 \item Confirm condor is running: {\fontfamily{cmtt}\selectfont \$
                 condor\_status \$HOSTNAME }
                 \item You should also see Condor running with {\fontfamily{cmtt}\selectfont
-                \$ ps aux | grep condor }
+                \$ ps aux }
             \end{enumerate}
     \end{enumerate}
 \clearpage
