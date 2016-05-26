@@ -177,7 +177,7 @@
             \item If the machine does not automatically run puppet, connect a console
             to the machine and log in as a root user (ask Admin for root login)
             \item After clearing the puppet files from wid-service-1 in the previous
-            steps, run {\fontfamily{cmtt}\selectfont \$ sudo rm -rvf /var/lib/pup/ssl }
+            steps, run {\fontfamily{cmtt}\selectfont \$ sudo rm -rvf /var/lib/puppet/ssl }
             on the target node. DO NOT RUN THIS ON wid-service-1.
             \item Then run {\fontfamily{cmtt}\selectfont \$ sudo puppetd -tv
             --configtimeout=1000 }
