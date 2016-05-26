@@ -258,6 +258,35 @@
         \subsubsection{Networking Basics}
         \subsubsection{CHTC Network Structure}
         \subsubsection{Troubleshooting Networking Issues}
+        \subsubsection{Changing From eth0 to eth1 Port:}
+        \begin{enumerate}
+        \item Log into cobbler(web):
+        	\begin{itemize}
+			\item go into cobbler for that node
+			\item in Networking: Add Interface - add eth1
+			\item change the Networking:Edit Interface from eht0 to eth1
+			\item increase the mac address by 1
+            \item delete eth0 
+        	\item save and sync
+            \end{itemize}
+		\item ssh into the dhcp server for that node:
+			\begin{itemize}
+            \item in /etc/dhcp/dhcod.conf
+			\item find the old mac address for the node and increase it by 1
+			\item :wq
+            \end{itemize}
+		\item get root on node(either console or ssh):
+        	\begin{itemize}
+			\item in node go to /etc/sysconfig/network-scripts/
+			\item cp ifcfg-eth0 ifcfg-eth1
+			\item rm -f incfg-eth0 
+			\item vim ifcfg-eth1
+			\item change eth0 to eth1 in vim
+			\item :wq
+            \end{itemize}
+		\item restart node
+		\end{enumerate}
+
 
 \clearpage
 
