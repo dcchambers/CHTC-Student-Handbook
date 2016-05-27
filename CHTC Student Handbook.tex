@@ -246,7 +246,85 @@
 \clearpage
 
 \section{Creating Tickets}
-    TODO
+    If you don't have any tickets assigned to you in your RT Queue that you can
+    work on, then you can go ahead and create your own tickets for work that needs
+    to be done.\\
+
+    We'll use a simple example to outline how to create tickets.\\
+
+    Let's say your queue is empty - you can log into Icinga (Or another monitoring
+    tool that we use) to look for any nodes that might be offline or experiencing
+    other issues.
+
+    \begin{enumerate}
+        \item Head to monitor0.chtc.wisc.edu in your browser.
+        \item Click on the link to Icinga, and log in (ask Admin for login info).
+        This will take you to the Icinga dashboard. From here, you can get a basic
+        overview of server status.
+        \item Look for machines listed under the "Host Problems" section.
+        \begin{itemize}
+            \item Let's say we see a node, e1000.chtc.wisc.edu, listed under that section
+            with the status message "Critical - Host Unreachable".
+            \item Click on that host to bring up information about it. From here,
+            you can get a better overview of what's wrong with the machine. In this case,
+            the machine is "Down" - offline for whatever reason. It might have crashed,
+            it might be powered off, we don't know yet. All we know is that Icinga can't
+            connect to it.
+        \end{itemize}
+        \item Great, now that we see a server is down, we need to check RT to see if
+        a ticket already exists for this issue.
+        \begin{itemize}
+            \item Log in to RT (crt.cs.wisc.edu) in a new tab.
+            \item Start a new search - select "New Search" under the "Tickets" tab
+            at the top of the screen.
+            \item Enter the server name (e1000) in the "Subject" box, and make sure
+            the relational selector is set to "Matches".
+            \item Click on "Add these terms and search".
+        \end{itemize}
+        \item At this point, you will either see (a) ticket(s) matching the server,
+        or none at all. We want only want to have 1 ticket for managing each server, so
+        it is important to not open new tickets when one already exists.
+        \item Let's say that you see several tickets that come up. First, check the ticket
+        status.
+        \begin{itemize}
+            \item If all tickets are "Resolved", then you are fine to re-open one.
+            You will always re-open the most recent, or most-related ticket.
+            \item If there is an OPEN ticket related to the issue, then someone is
+            already working on this issue and you can not continue creating a ticket.
+            \item If there are NO TICKETS matching, then you can create a new ticket.
+        \end{itemize}
+        \item If you want to re-open a closed ticket, first you will have to assign
+        the ticket to yourself. Under the "People" Tab, choose your name from the
+        "Owner" drop-down, and hit "Save Changes".
+        \item Then to re-open the ticket, hit "Re-Open" under the "Actions" tab.
+        \begin{itemize}
+            \item You may now work on the ticket like you would any other.
+        \end{itemize}
+        \item If there are no tickets matching, you will need to create a new ticket.
+        \begin{itemize}
+            \item At the top-right of the page next to the search bar is a ticket creation
+            button. From the drop-down, select "htcondor-inf" - This will open the page
+            to create a new ticket in the htcondor-inf queue.
+            \item In the right-most box labeled "Basics", put yourself in the "Owner"
+            field and "CHTC" in the inf\_subgroup field.
+            \item In the left-most box, enter an appropriate subject ("e1000 down"),
+            and a short-description if desired.
+            \item Click "Create" on the bottom of the page.
+            \item Assuming you made yourself the ticket owner, you will now see this ticket
+            in your queue!
+        \end{itemize}
+        \item LASTLY, if you re-opened or created a new ticket, you need to acknowledge
+        that you did so on Icinga so that other poeple won't create a duplicate ticket.
+        \begin{itemize}
+            \item Return to Icinga, and on the dashboard for that particular node, click
+            on "Acknowledge" under the "Problem Handling" section.
+            \item enter a short message, (eg "Created a ticket - [your name]").
+            \item Hit "Acknowledge Problem" - And you're done!
+        \end{itemize}
+    \end{enumerate}
+
+    Congratulations - you now know how to find problems on Icinga and create a ticket
+    in order to fix it!
 \clearpage
 
 \section{Checking for Errors}
@@ -537,6 +615,8 @@
     \begin{itemize}
         \item http://pages.cs.wisc.edu/~van-lyse/ - Neil's CS Page contains tons
         of useful CHTC links.
+        \item monitor0.chtc.wisc.edu - Our webpage for server monitoring. Contains
+        links to Icinga, Grafana, Ganglia, and more.
     \end{itemize}
 \clearpage
 
@@ -545,9 +625,13 @@
     \begin{itemize}
         \item Cobbler - Cobbler is a frontend tool for configuring Linux network
         installs with PXE boot. Learn more: http://cobbler.github.io/
+        \item Icinga - An open-source system monitoring tool with a web interface.
+        Our Icinga server is at monitor0.chtc.wisc.edu. Learn more at: https://www.icinga.org/
         \item Puppet - Puppet is a tool for managing automatic configuration of
         systems. Our puppetmaster machine is wid-service-1. Learn more:
         https://puppet.com/
+        \item RT (Request Tracker) - Ticket-tracking software. Access RT at:
+        https://crt.cs.wisc.edu/rt/
     \end{itemize}
 \clearpage
 
