@@ -166,15 +166,15 @@
             \item If you do this before the machine finishes rebuilding, it may
             run puppet automatically when it rebuilds. To see if it is doing this:
             When the machine is booting Scientific Linux, hit an arrow key
-            $\leftarrow$ or $\rightarrow$ on the console keyboard to view the boot
-            log. If the log is paused on “{\fontfamily{cmtt}\selectfont Starting:
+            $\leftarrow$ or $\rightarrow$, or ALT+D on the console keyboard to view the
+            verbose boot log. If the log is paused on “{\fontfamily{cmtt}\selectfont Starting:
             anamon…     [OK] }” for a while, that mean’s it’s running puppet. Good
             job! Once it finishes booting now, you should be able to log in with your username.
-            \item If the machine does not automatically run puppet, connect a console
+            \item If the machine does not run puppet automatically, connect a console
             to the machine and log in as a root user (ask Admin for root login)
-            \item After clearing the puppet files from wid-service-1 in the previous
-            steps, run {\fontfamily{cmtt}\selectfont \$ sudo rm -rvf /var/lib/pup/ssl }
-            on the target node. DO NOT RUN THIS ON wid-service-1.
+            \item ON THE TARGET NODE: run {\fontfamily{cmtt}\selectfont \$ sudo rm -rvf /var/lib/pup/ssl }
+            (After clearing the puppet files from wid-service-1 in the previous
+            steps). DO NOT RUN THIS ON wid-service-1.
             \item Then run {\fontfamily{cmtt}\selectfont \$ sudo puppetd -tv
             --configtimeout=1000 }
             \item Note: Puppet will not run if networking is broken (try to restart
@@ -223,9 +223,11 @@
         \item Next, we need to create a DHCP entry for this machine.
         \begin{itemize}
             \item DHCP is managed by different machines depending on the node location.
-            \item B240: cobbler-b240
-            \item 2360/CSL \& WID Data Center: wid-service-1
-            \item 3370: host-6
+            \begin{itemize}
+                \item B240: cobbler-b240
+                \item 2360/CSL \& WID Data Center: wid-service-1
+                \item 3370: host-6
+            \end{itemize}
             \item SSH into the correct server and become root. Then open up dhcpd.conf in VIM.
             \item Copy an exec node entry and edit it to create a new entry with the
             correct IP and MAC address of the new machine. Save the file.
@@ -250,6 +252,10 @@
         \subsubsection{Icinga CLI}
     \subsection{Error Logs}
     \subsection{Hardware Errors}
+\clearpage
+
+\section{Advanced Troubleshooting}
+    TODO
 \clearpage
 
 \section{Advanced Topics}
