@@ -1,7 +1,7 @@
 % CHTC Student Handbook
 
 \documentclass[10pt,letterpaper]{article}
-\usepackage[utf8]{inputenc}
+\usepackage[english,utf8]{inputenc}
 % Change font to Helvetica
 \usepackage{helvet}
 \renewcommand{\familydefault}{\sfdefault}
@@ -195,7 +195,170 @@
 \clearpage
 
 \section{Building a New Node}
-    TODO
+    Building a new node is needed when we get new nodes or repurpose old nodes from other teams.
+
+    \begin{enumerate}
+    	\item Edit DHCP server
+        	\begin{enumerate}
+            \item ssh into the DHCP server for the current data center \\
+            (ex: b240's DHCP server is is cobbler-b240.chtc.wisc.edu)
+            \item gain root \# \\
+            \# sudo su root
+            \item edit the dhcpd config file \\
+            \# vim /etc/dhcp/dhcpd.conf
+            \item
+            	Add an item to the list with the node's MAC address of the NIC that will be used for the 
+                cobbler boot and a fixed IP address for that node. 
+            	\begin{verbatim}
+example: 
+	host e465 { 
+        hardware ethernet 84:2b:2b:46:e4:bf; \\
+        fixed-address 128.104.58.107; \\
+        next-server 128.104.100.6; \\
+ }          \end{verbatim}
+            \item restart dhcpserver \\
+            \# srevice dhcpd restart
+       		\end{enumerate}
+        \item Create cobbler entry for node in cobbler.
+        \begin{enumerate}
+            \item Via Command Line: TODO!
+            \begin{enumerate}
+                \item SSH into wid-service-1.chtc.wisc.edu
+                \item {\fontfamily{cmtt}\selectfont \$ sudo cobbler system edit
+                --name=[server name] --netboot-enabled=True }
+                \item Check that netboot is enabled $\rightarrow$
+                {\fontfamily{cmtt}\selectfont \$ sudo cobbler system report
+                --name=[server name] }
+                \item Sync Cobbler $\rightarrow$ {\fontfamily{cmtt}\selectfont
+                \$ sudo cobbler sync }
+            \end{enumerate}
+            \item Via Web Interface TODO!
+            \begin{enumerate}
+                \item Open \href{https://wid-service-1.chtc.wisc.edu/cobbler_web}{Cobbler}
+                in your web browser
+                \item Click on “Systems” under the Configuration tab on the left side.
+                \item Find the node you want to rebuild and click on it’s name in
+                the list to open the node configuration tool.
+                \item Alternatively, navigate directly to \\
+                wid-service-1.chtc.wisc.edu/cobbler\_web/system/edit/[node name]
+                \item Click on the “general” drop down button to reveal more options
+                \item Check the “enable netboot” option
+                \item Hit “save” on the bottom of the page
+                \item When you are redirected to the cobbler system list page,
+                hit “Sync” Under the Actions tab on the left side.
+                \item Once you get a popup notification on the top-right of the
+                screen, the sync has complete. This may take a few seconds.
+            \end{enumerate}
+            \item Make sure you have the correct profile enabled in Cobbler as
+            well. If you are doing a standard rebuild you probably won’t have to
+            change it, but make sure if it’s a multi-disk execute node that it is
+            set to the correct SL66 Exec profile.
+        \end{enumerate}
+		\item If: hardware RAID, Then: build hardware RAID for OS
+        \begin{enumerate}
+			\item boot node using the console wait for the boot sequence to ask you to edit the hardware
+            RAID. Usually Ctrl-R.
+            \item clear out any raid configuration already set.
+            \item create a new RAID 1 disk using 2 disks
+            \item save, exit RAID controller, restart
+		\end{enumerate}
+        \item Reboot the machine and netboot it.
+        \begin{enumerate}
+            \item Most machines are set to netboot by default, meaning if you
+            reboot them they will search for a netboot entry and if they find it,
+            they will netboot automatically. If a machine is not netbooting automatically,
+            you may need to press a button on the keyboard (Often F12) when it POSTS
+            in order to force it to netboot. If you have tried these and it still
+            won’t boot from the network, go into the BIOS and change the boot order
+            to set netboot as boot priority \#1.
+            \item If done correctly, it should launch the Scientific Linux installer.
+            Once you see this is happening, move on to the next step.
+        \end{enumerate}
+        \item If: Hardware RAID Then: Restart to set up the other RAID
+        \begin{enumerate}
+			\item boot node using the console wait for the boot sequence to ask you to edit the hardware
+            RAID. \\Usually Ctrl-R.
+            \item create a new RAID 6 disk using all other unused disks
+            \item save, exit RAID controller, restart
+		\end{enumerate}
+        \item Build a new filesystem on the new RAID 6 disk 
+        \begin{enumerate}
+        	\item gain root \\
+            \$sudo su root
+        	\item Check state of the disks \\
+            \# fdisk -l 
+			\item  create partition label\\ 
+            \# parted /dev/sdb mklabel gpt  
+			\item  create primary partition sdb for the RAID 6 disk that is the entire disk \\
+            \# parted /dev/sdb mkpart primary 0\% 100\%
+			\item check the new state of disks \\
+            \# fdisk -l
+            \item do next step on the physical consol or create a tmux or screen session so the process will
+            not exit on a disconnection of the ssh session. 
+			\item Make the file system on the sdb disk 
+            \# mkfs.ext4 /dev/sdb1  \#make the file system
+            \item wait forever for this to finish
+			\item get the uuid of the new sdb disk
+            \begin{enumerate}
+				\item \# ls -l /dev/disk/by-uuid
+                \item \# copy the dev/sdb1 UUID \\
+                it's a 30-some digit alpha-numeric code
+			\end{enumerate}
+            \item \# update the /var/lib/condor/execute with the UUID of the new sub partition
+            \begin{enumerate}
+            	\item edit the /etc/fstab file of the new UUID
+                \# vim /etc/fstab 
+                \item find the line that is UUID="some\_old\_UUID" /var/lib/condor/execute ext4 defaults 1 2
+                \item replace the old UUID with the new /dev/sdb1 UUID \\
+                UUID="/dev/sdb1 UUID" /var/lib/condor/execute ext4 defaults 1 2
+            \end{enumerate}
+            \item unmount the old condor partition\\
+            \# umount /var/lib/condor/execute
+        	\item mout the new condor partition\\
+            \# mount -a
+            \item check that the new sdb1 partition is currently mounted as the cobbler partition\\
+            \# df \\
+            and check that /dev/sdb1 is mounted at /var/lib/condor/execute 
+            
+            
+        \end{enumerate}
+        \item Run Puppet.
+        \begin{enumerate}
+            \item We are going to need to run puppet once the machine is rebuilt
+            in order to configure it.
+            \item While the machine is rebuilding, SSH into wid-service-1.chtc.wisc.edu
+            \item Run this command: {\fontfamily{cmtt}\selectfont \$ sudo puppetca
+            -c [node name] } on wid-service-1.
+            \item If you do this before the machine finishes rebuilding, it may
+            run puppet automatically when it rebuilds. To see if it is doing this:
+            When the machine is booting Scientific Linux, hit an arrow key
+            $\leftarrow$ or $\rightarrow$ on the console keyboard to view the boot
+            log. If the log is paused on “{\fontfamily{cmtt}\selectfont Starting:
+            anamon…     [OK] }” for a while, that mean’s it’s running puppet. Good
+            job! Once it finishes booting now, you should be able to log in with your username.
+            \item If the machine does not automatically run puppet, connect a console
+            to the machine and log in as a root user (ask Admin for root login)
+            \item After clearing the puppet files from wid-service-1 in the previous
+            steps, run {\fontfamily{cmtt}\selectfont \$ sudo rm -rvf /var/lib/pup/ssl }
+            on the target node. DO NOT RUN THIS ON wid-service-1.
+            \item Then run {\fontfamily{cmtt}\selectfont \$ sudo puppetd -tv
+            --configtimeout=1000 }
+            \item Note: Puppet will not run if networking is broken (try to restart
+            networking or reboot the machine if this is the case) or the system
+            clock is broken. To set the clock run: {\fontfamily{cmtt}\selectfont
+            \$ rdate -s ntp.doit.wisc.edu }
+        \end{enumerate}
+        \item ask Mote to update the condor git with config file for the new node(s)
+        \item Log in and confirm condor is running.
+            \begin{enumerate}
+                \item Once puppet finishes running, you should be able to log in
+                with your own username
+                \item Confirm condor is running: {\fontfamily{cmtt}\selectfont \$
+                condor\_status \$HOSTNAME }
+                \item You should also see Condor running with {\fontfamily{cmtt}\selectfont
+                \$ ps aux }
+            \end{enumerate}
+    \end{enumerate}
 \clearpage
 
 \section{Decommissioning a Node}
