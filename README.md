@@ -18,15 +18,11 @@ a server that breaks.
 ### Finished
 * Update the node locations files and chart in the handbook
 * Node rebuild how-to.
+* Concert the existing doc to LaTeX format.
+* All CHTC nodes, including ACI nodes, are located and documented.
 
 ### TODO
-* Convert the exiting doc to LaTeX format.
-* Finish the CHTC Student Handbook
-  * Building a New Node
-  * Decommissioning a Node
-  * Creating Tickets
-  * Checking for Errors
-  * Advanced Topics
+* Release 1.0 of the CHTC Student Handbook
 
 ---
 ### Contributing
