@@ -173,7 +173,7 @@
             job! Once it finishes booting now, you should be able to log in with your username.
             \item If the machine does not run puppet automatically, connect a console
             to the machine and log in as a root user (ask Admin for root login)
-            \item ON THE TARGET NODE: run {\fontfamily{cmtt}\selectfont \$ sudo rm -rvf /var/lib/pup/ssl }
+            \item ON THE TARGET NODE: run {\fontfamily{cmtt}\selectfont \$ sudo rm -rvf /var/lib/puppet/ssl }
             (After clearing the puppet files from wid-service-1 in the previous
             steps). DO NOT RUN THIS ON wid-service-1.
             \item After clearing the puppet files from wid-service-1 in the previous
@@ -242,7 +242,18 @@
 \clearpage
 
 \section{Decommissioning a Node}
-    TODO
+    TODO - Flesh out this section. \\
+
+    \begin{enumerate}
+        \item Label server for spare parts with ticket \#, or SWAP it.
+        \item Remove it from 3370 DHCP config.
+        \item Remove it's cobbler system object.
+        \item Remove it's puppet entry.
+        \item Remove it's icinga entry.
+        \item Remove it's htcondor configuration host/*.local file (Ask Moate to do this).
+    \end{enumerate}
+
+
 \clearpage
 
 \section{Creating Tickets}
@@ -376,19 +387,19 @@
         & c055 & [???]   &         & c025 & spalding06 & e026 & atlas93 & atlas77 \\
         & c046 & e003    &         & c026 & spalding05 & e028 & atlas95 & atlas78 \\
         & c057 &         &         & c027 & c081       & e041 & atlas96 & atlas79 \\
-        & c058 &         &         & c028 & c082       & e038 & atlas97 & atlas80 \\
+        & c058 &         &         & c028 & c082       & e038 & atlas97 & atlas08 \\
         & c059 &         &         & c029 & c084       & e042 & atlas98 & atlas42 \\
         & c060 &         &         & c030 & c085       & e046 & atlas99 & atlas62 \\
         & e049 &         &         & c012 & c086       & e056 &         &         \\
         & e050 &         &         & c013 & c088       & e052 &         &         \\
         & e051 &         &         & c049 & c089       & e043 &         &         \\
-        & e054 &         &         & c015 & c090       & db1  &         &         \\
-        & e055 &         &         & c016 &            & db2  &         &         \\
-        & e062 &         &         & c017 &            & db3  &         &         \\
-        & e063 &         &         & c069 &            & db4  &         &         \\
-        & e064 &         &         & c020 &            & db5  &         &         \\
-        & e065 &         &         & c001 &            & db6  &         &         \\
-        & e031 &         &         & c002 &            & db7  &         &         \\
+        & e054 &         &         & c015 & c090       & db1* &         &         \\
+        & e055 &         &         & c016 &            & e460 &         &         \\
+        & e062 &         &         & c017 &            & e461 &         &         \\
+        & e063 &         &         & c069 &            & e462 &         &         \\
+        & e064 &         &         & c020 &            & e463 &         &         \\
+        & e065 &         &         & c001 &            & e464 &         &         \\
+        & e031 &         &         & c002 &            & e465 &         &         \\
         &      &         &         & c004 &            &      &         &         \\
         &      &         &         & c070 &            &      &         &         \\
         &      &         &         & c065 &            &      &         &         \\
@@ -507,7 +518,7 @@
         \hline
         \multirow{1}{3em}{Node}
 
-        & e198 & [???]   & osghost          & host-6     & e222    & submit-4 & e116           & spalding-4 \\
+        & e198 & swamp-nas & osghost        & host-6     & e222    & submit-4 & e116           & spalding-4 \\
         & e197 & swamp05 & itb-data1        & pagesubmit & e220    & host-23  & e117           & spalding-1 \\
         & e196 & swamp04 & itb-data2        & atlas21    & e219    & host-21  & nmi-0067       & spalding-2 \\
         & e195 & swamp03 & itb-data3        & atlas22    & e215    & host-19  & e115           & spalding-3 \\
@@ -541,7 +552,7 @@
         & e167 &         &                  &            &         &          & e247           &            \\
         & e166 &         &                  &            &         &          &                &            \\
         & e165 &         &                  &            &         &          &                &            \\
-        & e164 &         &                  &            &         &          &                &            \\
+        & e164* &         &                  &            &         &          &                &            \\
         & e163 &         &                  &            &         &          &                &            \\
         & e162 &         &                  &            &         &          &                &            \\
         & e161 &         &                  &            &         &          &                &            \\
@@ -583,7 +594,7 @@
         & e129  & osg-ss-se      & e091           & e099 \\
         & e130  & [batlab]       & [???]          & e098 \\
         & e131  & host-1         & [???]          & e097 \\
-        & e132  & host-2         & [???]          & e096 \\
+        & e132  & hypervisor0    & [???]          & e096 \\
         & e133  &                &                &      \\
         & e134  &                &                &      \\
         & e135  &                &                &      \\
@@ -606,6 +617,66 @@
         \hline
         \end{tabular}
         \end{center}
+
+        \begin{center}
+        \begin{tabular}{ |c|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+        Rack & Z1-R11 & Z1-R10 & Z1-R8 & Z1-R7 & Z1-R5 & Z2-R11 & Z2-R10 & Z2-R8 & Z2-R7 & Z2-R5 \\
+        \hline
+        \multirow{1}{3em}{Node}
+        & aci-336 & aci-288 & aci-storage-7  & aci-service-1 & aci-144 & aci-096 & aci-048 & aci-192 & aci-240 & aci-344 \\
+        & aci-335 & aci-287 & aci-storage-8  & aci-service-2 & aci-143 & aci-095 & aci-047 & aci-191 & aci-239 & aci-343 \\
+        & aci-334 & aci-286 & aci-storage-9  & aci-service-3 & aci-142 & aci-094 & aci-046 & aci-190 & aci-238 & aci-342 \\
+        & aci-333 & aci-285 & aci-storage-10 & aci-storage-1 & aci-141 & aci-093 & aci-045 & aci-189 & aci-237 & aci-341 \\
+        & aci-332 & aci-284 & aci-storage-11 & aci-storage-2 & aci-140 & aci-092 & aci-044 & aci-188 & aci-236 & aci-340 \\
+        & aci-331 & aci-283 & aci-storage-12 & aci-storage-3 & aci-139 & aci-091 & aci-043 & aci-187 & aci-235 & aci-339 \\
+        & aci-330 & aci-282 & aci-storage-13 & aci-storage-4 & aci-138 & aci-090 & aci-042 & aci-186 & aci-234 & aci-338 \\
+        & aci-329 & aci-281 & aci-storage-14 & aci-storage-5 & aci-137 & aci-089 & aci-041 & aci-185 & aci-233 & aci-337 \\
+        & aci-328 & aci-280 & aci-storage-15 & aci-storage-6 & aci-136 & aci-088 & aci-040 & aci-184 & aci-232 &         \\
+        & aci-327 & aci-279 & aci-storage-16 &               & aci-135 & aci-087 & aci-039 & aci-183 & aci-231 &         \\
+        & aci-326 & aci-278 &                &               & aci-134 & aci-086 & aci-038 & aci-182 & aci-230 &         \\
+        & aci-325 & aci-277 &                &               & aci-133 & aci-085 & aci-037 & aci-181 & aci-229 &         \\
+        & aci-324 & aci-276 &                &               & aci-132 & aci-084 & aci-036 & aci-180 & aci-228 &         \\
+        & aci-323 & aci-275 &                &               & aci-131 & aci-083 & aci-035 & aci-179 & aci-227 &         \\
+        & aci-322 & aci-274 &                &               & aci-130 & aci-082 & aci-034 & aci-178 & aci-226 &         \\
+        & aci-321 & aci-273 &                &               & aci-129 & aci-081 & aci-033 & aci-177 & aci-225 &         \\
+        & aci-320 & aci-272 &                &               & aci-128 & aci-080 & aci-032 & aci-176 & aci-224 &         \\
+        & aci-319 & aci-271 &                &               & aci-127 & aci-079 & aci-031 & aci-175 & aci-223 &         \\
+        & aci-318 & aci-270 &                &               & aci-126 & aci-078 & aci-030 & aci-174 & aci-222 &         \\
+        & aci-317 & aci-269 &                &               & aci-125 & aci-077 & aci-029 & aci-173 & aci-221 &         \\
+        & aci-316 & aci-268 &                &               & aci-124 & aci-076 & aci-028 & aci-172 & aci-220 &         \\
+        & aci-315 & aci-267 &                &               & aci-123 & aci-075 & aci-027 & aci-171 & aci-219 &         \\
+        & aci-314 & aci-266 &                &               & aci-122 & aci-074 & aci-026 & aci-170 & aci-218 &         \\
+        & aci-313 & aci-265 &                &               & aci-121 & aci-073 & aci-025 & aci-169 & aci-217 &         \\
+        & aci-312 & aci-264 &                &               & aci-120 & aci-072 & aci-024 & aci-168 & aci-216 &         \\
+        & aci-311 & aci-263 &                &               & aci-119 & aci-071 & aci-023 & aci-167 & aci-215 &         \\
+        & aci-310 & aci-262 &                &               & aci-118 & aci-070 & aci-022 & aci-166 & aci-214 &         \\
+        & aci-309 & aci-261 &                &               & aci-117 & aci-069 & aci-021 & aci-165 & aci-213 &         \\
+        & aci-308 & aci-260 &                &               & aci-116 & aci-068 & aci-020 & aci-164 & aci-212 &         \\
+        & aci-307 & aci-259 &                &               & aci-115 & aci-067 & aci-019 & aci-163 & aci-211 &         \\
+        & aci-306 & aci-258 &                &               & aci-114 & aci-066 & aci-018 & aci-162 & aci-210 &         \\
+        & aci-305 & aci-257 &                &               & aci-113 & aci-065 & aci-017 & aci-161 & aci-209 &         \\
+        & aci-304 & aci-256 &                &               & aci-112 & aci-064 & aci-016 & aci-160 & aci-208 &         \\
+        & aci-303 & aci-255 &                &               & aci-111 & aci-063 & aci-015 & aci-159 & aci-207 &         \\
+        & aci-302 & aci-254 &                &               & aci-110 & aci-062 & aci-014 & aci-158 & aci-206 &         \\
+        & aci-301 & aci-253 &                &               & aci-109 & aci-061 & aci-013 & aci-157 & aci-205 &         \\
+        & aci-300 & aci-252 &                &               & aci-108 & aci-060 & aci-012 & aci-156 & aci-204 &         \\
+        & aci-299 & aci-251 &                &               & aci-107 & aci-059 & aci-011 & aci-155 & aci-203 &         \\
+        & aci-298 & aci-250 &                &               & aci-106 & aci-058 & aci-010 & aci-154 & aci-202 &         \\
+        & aci-297 & aci-249 &                &               & aci-105 & aci-057 & aci-009 & aci-153 & aci-201 &         \\
+        & aci-296 & aci-248 &                &               & aci-104 & aci-056 & aci-008 & aci-152 & aci-200 &         \\
+        & aci-295 & aci-247 &                &               & aci-103 & aci-055 & aci-007 & aci-151 & aci-199 &         \\
+        & aci-294 & aci-246 &                &               & aci-102 & aci-054 & aci-006 & aci-150 & aci-198 &         \\
+        & aci-293 & aci-245 &                &               & aci-101 & aci-053 & aci-005 & aci-149 & aci-197 &         \\
+        & aci-292 & aci-244 &                &               & aci-100 & aci-052 & aci-004 & aci-148 & aci-196 &         \\
+        & aci-291 & aci-243 &                &               & aci-099 & aci-051 & aci-003 & aci-147 & aci-195 &         \\
+        & aci-290 & aci-242 &                &               & aci-098 & aci-050 & aci-002 & aci-146 & aci-194 &         \\
+        & aci-289 & aci-241 &                &               & aci-097 & aci-049 & aci-001 & aci-145 & aci-193 &         \\
+
+        \hline
+        \end{tabular}
+        \end{center}
+
 
 
 \clearpage
