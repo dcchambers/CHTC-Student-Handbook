@@ -242,14 +242,64 @@
 \clearpage
 
 \section{Decommissioning a Node}
-    TODO - Flesh out this section. \\
-
     \begin{enumerate}
-        \item Label server for spare parts with ticket \#, or SWAP it.
-        \item Remove it from 3370 DHCP config.
+        \item Label the server for spare parts with ticket \#, or SWAP it.
+        \begin{itemize}
+            \item If you SWAP a server, remove the HDDs and any hardware that might be useful (eg, RAM).
+            \item If it has a CSL Inventory Sticker, email the CSL with the Inventory number
+            and tell them you are sending the server to SWAP.
+            \item Drop the server off in the SWAP area of the CS basement (by the elevators).
+        \end{itemize}
+        \item Remove it from the DHCP config.
+        \begin{itemize}
+            \item SSH into the relevant DHCP server.
+            \begin{itemize}
+                \item B240: cobbler-b240
+                \item 2360/CSL \& WID Data Center: wid-service-1
+                \item 3370: host-6
+            \end{itemize}
+            \item Become root with {\fontfamily{cmtt}\selectfont \$ sudo -i }
+            \item Open up the dhcpd.conf file under /etc/dhcp/dhcpd.conf on the correct server.
+            \item Delete the entry for the server you are decommissioning.
+            \item Restart DHCP - Run {\fontfamily{cmtt}\selectfont \$ sudo service dhcpd restart }, make
+            sure that it restarts OK. If not, you deleted something you shouldn't have.
+        \end{itemize}
         \item Remove it's cobbler system object.
+            \begin{itemize}
+                \item From the cobbler web interface, view the list of systems by going to \\
+                https://wid-service-1.chtc.wisc.edu/cobbler\_web/system/list
+                \item Locate the server on the list, and then press the "Delete" button next to it.
+                \item Sync cobbler. (Press the "Sync" button under actions.)
+            \end{itemize}
         \item Remove it's puppet entry.
-        \item Remove it's icinga entry.
+            \begin{itemize}
+                \item SSH into wid-service-1, and become root.
+                \item Open up the correct file in this directory: /etc/puppet/environments/production/modules/site/manifests/chtc/nodes/
+                \begin{itemize}
+                    \item B240: chtcexecsl66\_b240.pp
+                    \item 2360/CSL: chtcexecsl66\_2360.pp
+                    \item WID Data Center: chtcexecsl66\_wid.pp
+                    \item 3370: chtcexecsl66\_3370a.pp
+                \end{itemize}
+                \item Delete the puppet entry for the server you are decommissioning.
+            \end{itemize}
+        \item Remove it's Icinga \& Nagios entry.
+            \begin{itemize}
+                \item Icinga
+                \begin{itemize}
+                    \item SSH into monitor0.chtc.wisc.edu
+                    \item Become root and open up /etc/icinga2/conf.d/hosts.conf
+                    \item Delete the entry for the server you are decommissioning.
+                    \item Restart Icinga - Run {\fontfamily{cmtt}\selectfont \$ sudo service icinga2 restart }
+                \end{itemize}
+                \item Nagios
+                \begin{itemize}
+                    \item SSH into monitor.chtc.wisc.edu
+                    \item Become root and open up /etc/nagios/objects/hosts.cfg
+                    \item Delete the entry for the server you are decommissioning.
+                    \item Restart Nagios - Run {\fontfamily{cmtt}\selectfont \$ sudo service nagios restart }
+                \end{itemize}
+            \end{itemize}
         \item Remove it's htcondor configuration host/*.local file (Ask Moate to do this).
     \end{enumerate}
 
