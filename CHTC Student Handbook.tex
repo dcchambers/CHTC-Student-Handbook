@@ -100,6 +100,10 @@
             tasks and use this as a reference manual.
             \item The appendix includes a complete list of node locations, useful
             for location a machine for physical changes (hard reboot, HDD swap, etc).
+            \item If you find an error in this guide, or you want to contribute, head on over
+            to https://github.com/dcchambers/CHTC-Student-Handbook and file a bug report or
+            submit a pull request with your own changes!
+
         \end{itemize}
 
 \clearpage
@@ -199,9 +203,9 @@
 \clearpage
 
 \section{Building a New Node}
-    TODO - Flesh out this section. \\
+    TODO - Elaborate. \\
 
-    Building a new node is very similiar to rebuilding a current machine, with the
+    Building a new node is very similar to rebuilding a current machine, with the
     added caveat of configuring the node in Cobbler and DHCP.
     \begin{enumerate}
         \item First, we need to create a new entry for the node in Cobbler. You
@@ -212,16 +216,18 @@
             \begin{itemize}
                 \item Go to cobbler web.
                 \item Create a new system. The Easiest way to do this is to copy
-                an existing entry and change the relevent information.
-                \item Open up the new machine entry you just created, change the
-                hostname, the IP address, and MAC address, and make sure that
-                the profile and image are set to the correct one.
+                an existing execute node entry and change the relevant information.
+                \item Open up the new machine entry you just created and change the
+                hostname, IP address, and MAC address. Make sure to do this under the
+                correct network interface (generally eth0).
+                \item Make sure you selected the correct profile. Generally,
+                you will use one of the SL6.6 profiles for execute nodes.
                 \item Enable netboot, save it, and sync cobbler once it's configured
                 correctly.
             \end{itemize}
             \item Via CLI
             \begin{itemize}
-                \item CLI instructions... TODO
+                \item TODO - CLI Intsructions.
             \end{itemize}
         \end{itemize}
         \item Next, we need to create a DHCP entry for this machine.
@@ -232,12 +238,15 @@
                 \item 2360/CSL \& WID Data Center: wid-service-1
                 \item 3370: host-6
             \end{itemize}
-            \item SSH into the correct server and become root. Then open up dhcpd.conf in VIM.
-            \item Copy an exec node entry and edit it to create a new entry with the
+            \item SSH into the correct server and become root. Then open up /etc/dhcp/dhcpd.conf in VIM.
+            \item Copy an existing execute node entry and edit it to create a new entry with the
             correct IP and MAC address of the new machine. Save the file.
             \item run {\fontfamily{cmtt}\selectfont \$ service dhcpd restart } - if
             an error comes up, you screwed up the .conf file.
         \end{itemize}
+        \item You should now have the new node set up in Cobbler and DHCP. You can follow
+        the standard steps to build a node at this point. Netboot the machine, run puppet,
+        and make sure it's running jobs once it's finished.
     \end{enumerate}
 \clearpage
 
@@ -738,6 +747,9 @@
         of useful CHTC links.
         \item monitor0.chtc.wisc.edu - Our webpage for server monitoring. Contains
         links to Icinga, Grafana, Ganglia, and more.
+        \item https://chtc-sa.cs.wisc.edu/trac/priv - CHTC Private Wiki. Login required,
+        contains a massive amount of information and guides. Some things are dated, but
+        still extremely useful.
     \end{itemize}
 \clearpage
 
