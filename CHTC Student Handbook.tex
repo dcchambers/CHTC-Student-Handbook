@@ -415,6 +415,18 @@
         \subsubsection{Networking Basics}
         \subsubsection{CHTC Network Structure}
         \subsubsection{Troubleshooting Networking Issues}
+    \subsection{Making Your Life Easier}
+    \begin{enumerate}
+        \item Rebooting stubborn nodes remotely
+            \begin{itemize}
+                \item There's a handy "magic key" called sysrq that is managed through the /proc filesystem in Linux. Quite a few things can be done with this, but a faithful adminstrative trick is to echo a 'key' to the sysrq-trigger to force a reboot when performing a {\fontfamily{cmtt}\selectfont \$ sudo reboot } just doesn't cut it.
+                \item First, you'll need to su into root: {\fontfamily{cmtt}\selectfont \$ sudo su - }
+                \item Next, {\fontfamily{cmtt}\selectfont \$ echo "1" > /proc/sys/kernel/sysrq } to enable the sysrq 'key'.
+                 \item Lastly, in order to force the node to reboot, {\fontfamily{cmtt}\selectfont \$ echo "b" > /proc/sysrq-trigger }
+                \item Not as good as full IPMI control but useful for pesky nodes. We'll go over IPMI next.
+             \end{itemize}
+    \end{enumerate}
+
 
 \clearpage
 
@@ -646,7 +658,7 @@
         & e122  & [???]          & e020           & e106 \\
         & e123  & host-7         & e033           & e105 \\
         & e124  & submit-5       & e021           & e104 \\
-        & e125  & [???]          & e014           & e103 \\
+        & e125  & submit-3       & e014           & e103 \\
         & e126  & quickstep      & e015           & e102 \\
         & e127  & wid-service-1  & matlab-build-1 & e101 \\
         & e128  & e092           & e001           & e100 \\
