@@ -69,3 +69,5 @@
         * `/usr/local/bin/r10k_puppet.sh master`
       * Networking will need to be working in order to run puppet. If you did all the above steps correctly (especially setting up the role and site files/symlinks) then networking should be automatically configured.
       * If the git server is down or having issues, puppet won't run.
+
+If you have any questions, refer to the [EL7 upgrade ticket. (#51784)]( https://crt.cs.wisc.edu/rt/Ticket/Display.html?id=51784)
