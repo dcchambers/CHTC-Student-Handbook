@@ -1,4 +1,4 @@
-** CHTC User Mapping Guide **
+**CHTC User Mapping Guide**
 
   * The goal of user-mapping is to account for all of the usage hours in the
   various HTCondor pools at the UW Campus, including the CHTC pool. Ideally,
