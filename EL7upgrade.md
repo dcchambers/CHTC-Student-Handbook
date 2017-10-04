@@ -1,5 +1,7 @@
 **EL7 Upgrade Guide**
 
+*NOTE: As of 10/4/17 we have a new Centos 7.4 Profile in Cobbler. Use this profile when rebuilding/building execute machines!*
+
 
 1. Fix any hardware issues with the server, such as a bad disk or RAID configuration (only on certain machines).
 
@@ -34,16 +36,16 @@
     * You will need to make these changes with `sudo` <br><br>
 
 4. Update the cobbler system object for the node.
-  * You will need to enable netboot, set the profile to be CentOS_7_3_exec, and set the hostname.
+  * You will need to enable netboot, set the profile to be CentOS_7_4_exec, and set the hostname.
   * SSH into wid-service-1.
     * `$ sudo cobbler system report --name=[node]` to view the current cobbler configuration for this server.
-    * `$ sudo cobbler system edit --name=[node] --netboot-enabled=true --profile=CentOS_7_3_exec --hostname=[hostname]`
+    * `$ sudo cobbler system edit --name=[node] --netboot-enabled=true --profile=CentOS_7_4_exec --hostname=[hostname]`
     * Check that your changes were made correctly by running another report.
     * `$ sudo cobbler sync` when you are done.
   * If you are upgrading a batch of nodes, you can run this small script:
     > for i in [Space delimited node list]; do <br>
     > sudo cobbler system edit --name=$i <br>
-    > --profile=CentOS_7_3_exec \ <br>
+    > --profile=CentOS_7_4_exec \ <br>
     > --kopts='' \ <br>
     > --ksmeta='' \ <br>
     > --netboot-enabled=true <br>
